@@ -9,13 +9,19 @@ package phalgo
 import (
 	"github.com/labstack/echo/middleware"
 	"github.com/labstack/echo"
-	"github.com/labstack/echo/engine/fasthttp"
-	"github.com/labstack/echo/engine/standard"
 	"net/http"
 )
 
-var Echo *echo.Echo
+const (
+	RETJSON = 1
+	RETMXL = 2
+	RETDES = 3
+)
 
+var (
+	Echo *echo.Echo
+	RetType int = 1
+)
 // 初始化echo实例
 func NewEcho() *echo.Echo {
 
@@ -23,22 +29,32 @@ func NewEcho() *echo.Echo {
 	return Echo
 }
 
-// 使用Fasthttp方式开启服务
-func RunFasthttp(prot string) {
+// 设置Ret格式
+func SetRetType(i int) {
 
-	Echo.Run(fasthttp.New(prot))
+	RetType = i
 }
 
-// 使用Standard的方式开启服务
-func RunStandard(prot string) {
 
-	Echo.Run(standard.New(prot))
+// 开启服务
+func Start(prot string) {
+	Echo.Logger.Fatal(Echo.Start(prot))
 }
 
 // 打印请求异常信息
 func Recover() {
 
 	Echo.Use(middleware.Recover())
+}
+
+// 是否开启debug
+func SetDebug(on bool) {
+	Echo.Debug = on
+}
+
+// 获取debug状态
+func Debug() bool {
+	return Echo.Debug
 }
 
 // 打印请求信息
@@ -51,6 +67,12 @@ func Logger() {
 func Gzip() {
 
 	Echo.Use(middleware.Gzip())
+}
+
+// 设置Body大小
+func BodyLimit(str string) {
+
+	Echo.Use(middleware.BodyLimit(str))
 }
 
 // 自动添加末尾斜杠

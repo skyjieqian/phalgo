@@ -1,13 +1,13 @@
-# PhalGo V 0.0.2
+# PhalGo V 0.0.4
 
-##前言
+## 前言
 
 PhalGo是一个Go语言开发的一体化开发框架,主要用于API开发,因为使用ECHO框架作为http服务,MVC模式一样可以使用,牛顿曾经说过"如果我比别人看得远,那是因为我站在巨人的肩膀上",既然Golang有那么多优秀的组件为什么还要重复造轮子呢?所以就有了一个把一些优秀组件整合起来降低开发成本的想法,整合了比较好的组件比如echo,gorm,viper等等,开源出来希望可以帮助到大家,也希望和大家一起交流!
 
 **注意:框架前期还不是很完善,请不要直接使用到生产环境!**
 
 
-##PhalGo的目的
+## PhalGo的目的
 
 PhalGo不是新技术,也不是新的模式,而是继续将前人,大神和顶级大师写的非常优秀的组件进行整合进行分享,并且进行封装来更易于开发人员来进行使用,最终达到建立规范降低开发成本的目的,这是PhalGo被创造出来核心的目的。
 
@@ -16,15 +16,16 @@ PhalGo不是新技术,也不是新的模式,而是继续将前人,大神和顶�
 PhalGo是对PhalApi和PhalCon的致敬,吸取了一些好的思想,应为是使用golnag编写所以命名为PhalGo
 
 
-##安装
+## 安装
 
 多谢各位同学的反馈PhalGo安装已经推荐使用**glide**进行安装
 
 glide工具的安装也很简单可以参考:https://github.com/Masterminds/glide
 
-我们只需要在我们的项目目录建立**glide.yaml**文件加以下内容然后执行**glide install**便会自动开始安装
+我们只需要在我们的项目目录建立**glide.yaml**文件加以下内容然后执行**glide install**便会自动开始安装,package: 后面更项目名称
 
-    package: phalgo-sample     //你的项目名称
+
+    package: phalgo-sample     
     import:
     - package: github.com/wenzhenxi/phalgo
 
@@ -37,7 +38,7 @@ PhalGo的升级也很简单,只需要在项目目录执行:
 
 **phalgo-sample:**[https://github.com/wenzhenxi/phalgo-sample](https://github.com/wenzhenxi/phalgo-sample "https://github.com/wenzhenxi/phalgo-sample")
 
-##Holle,world!
+## Holle,world!
 
 创建文件 server.go
 
@@ -53,12 +54,12 @@ PhalGo的升级也很简单,只需要在项目目录执行:
         //初始化ECHO路由
         phalgo.NewEcho()
         // Routes路由
-        phalgo.Echo.Get("/", func(c echo.Context) error {
-            Response := phalgo.Response{Context:c}
+        phalgo.Echo.GET("/", func(c echo.Context) error {
+            Response := phalgo.NewResponse(c)
             return Response.RetSuccess("hello,world!")
         })
-        //开启服务
-        phalgo.RunFasthttp(":1333")
+    	//开启服务
+    	phalgo.Start(":1333")
     }
 
 运行:
@@ -69,38 +70,35 @@ PhalGo的升级也很简单,只需要在项目目录执行:
 
 ![](http://i.imgur.com/tHi9dT2.png)
     
-##依赖
+## 依赖
 
     //配置文件读取
-    go get github.com/spf13/viper
+    github.com/spf13/viper
     
-    //辅助使用,参数过滤,curl等
-    go get github.com/astaxie/beego
+    //辅助使用,参数过滤,curl等(已经集成到框架)
+    github.com/astaxie/beego
     
     //主要路由
-    go get github.com/labstack/echo
+    github.com/labstack/echo
     
     //主要数据操作
-    go get github.com/jinzhu/gorm
+    github.com/jinzhu/gorm
     
     //log记录
-    go get github.com/Sirupsen/logrus
+    github.com/Sirupsen/logrus
     
     //进程级别缓存
-    go get github.com/coocood/freecache
-    
-    //高速http
-    go get github.com/valyala/fasthttp
+    github.com/coocood/freecache
     
     //redis依赖
-    go get github.com/garyburd/redigo
+    github.com/garyburd/redigo
     
     //注意会使用到如下依赖(国内可能需要翻墙)
     golang.org/x/net/context
     golang.org/x/sys/unix
     golang.org/x/crypto/md4
     
-##PhalGo-DOC
+## PhalGo-DOC
 
 **文档正在完善中,多谢大家的支持!**
 
@@ -114,11 +112,11 @@ PhalGo的升级也很简单,只需要在项目目录执行:
 
 [[2.1]PhalGo-Echo](http://git.oschina.net/wenzhenxi/phalgo/blob/master/docs/manual-zh-CN/%5B2.1%5DPhalGo-Echo.md)
 
-[[2.2]PhalGo-请求数据处理](http://git.oschina.net/wenzhenxi/phalgo/blob/master/docs/manual-zh-CN/%5B2.2%5DPhalGo-%E8%AF%B7%E6%B1%82%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86.md)
+[[2.2]PhalGo-Request](http://git.oschina.net/wenzhenxi/phalgo/blob/master/docs/manual-zh-CN/[2.2]PhalGo-Request.md)
 
 [[2.3]PhalGo-参数验证过滤](http://git.oschina.net/wenzhenxi/phalgo/blob/master/docs/manual-zh-CN/%5B2.3%5DPhalGo-%E5%8F%82%E6%95%B0%E9%AA%8C%E8%AF%81%E8%BF%87%E6%BB%A4.md)
 
-[[2.4]PhalGo-返回数据处理](http://git.oschina.net/wenzhenxi/phalgo/blob/master/docs/manual-zh-CN/%5B2.4%5DPhalGo-%E8%BF%94%E5%9B%9E%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86.md)
+[[2.4]PhalGo-Respones](http://git.oschina.net/wenzhenxi/phalgo/blob/master/docs/manual-zh-CN/%5B2.4%5DPhalGo-Respones.md)
 
 [[2.5]PhalGo-异常处理](http://git.oschina.net/wenzhenxi/phalgo/blob/master/docs/manual-zh-CN/%5B2.5%5DPhalGo-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86.md)
 
@@ -141,7 +139,7 @@ PhalGo的升级也很简单,只需要在项目目录执行:
 [[4.8]PhalGo-签名和加密.md](http://git.oschina.net/wenzhenxi/phalgo/blob/master/docs/manual-zh-CN/%5B4.7%5DPhalGo-%E7%AD%BE%E5%90%8D%E5%92%8C%E5%8A%A0%E5%AF%86.md)
 
     
-##联系方式
+## 联系方式
 
 个人主页:w-blog.cn
 

@@ -13,6 +13,7 @@ import (
 	"os"
 	"strings"
 	"path/filepath"
+	"strconv"
 )
 
 //当前项目根目录
@@ -32,6 +33,11 @@ func PrintType(j interface{}) {
 	fmt.Println(reflect.TypeOf(j))
 }
 
+//------------------------------------------------类型互转--------------------
+
+func IntTurnString(i int) string {
+	return strconv.Itoa(i)
+}
 
 //------------------------------------------------以下都是从接口类型进行类型断言转换---------------------
 
@@ -112,6 +118,17 @@ func TurnFloat64(i interface{}) float64 {
 	return 0
 }
 
+// 从接口类型转换到接口切片
+func TurnSlice(i interface{}) []interface{} {
+
+	j, p := i.([]interface{})
+	if p {
+		return j
+	}
+
+	return nil
+}
+
 //---------------------urlcode
 
 // URL编码
@@ -167,7 +184,7 @@ func IsDirExists(path string) bool {
 }
 
 //创建文件
-func  MkdirFile(path string) error {
+func MkdirFile(path string) error {
 
 	err := os.Mkdir(path, os.ModePerm)  //在当前目录下生成md目录
 	if err != nil {
